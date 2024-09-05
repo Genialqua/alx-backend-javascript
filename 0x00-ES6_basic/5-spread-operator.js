@@ -1,3 +1,3 @@
-export default function concatArrays(...array) {
-  return [...array[0], ...array[1], ...array[2].split('')];
+export default function concatArrays(array1, array2, string) {
+  return [...array1, ...array2, ...string];
 }
