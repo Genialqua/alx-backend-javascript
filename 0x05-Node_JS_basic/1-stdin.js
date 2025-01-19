@@ -1,14 +1,19 @@
+const { isatty } = require('tty');
+
 process.stdin.setEncoding('utf8');
 
 process.stdout.write('Welcome to ALX, what is your name?\n');
 
 process.stdin.on('data', (input) => {
-  if (input) {
-    process.stdout.write(`Your name is: ${input}\n`);
-    process.stdin.end(); // Close the input stream after receiving the name
-  }
-});
+  const trimmedInput = input.trim();
 
-process.stdin.on('end', () => {
-  process.stdout.write('This important software is now closing.\n');
+  if (isatty(process.stdin.fd)) {
+    process.stdout.write(`Your name is: ${trimmedInput}\n`);
+    process.exit(); // Exit after displaying the name
+  } else {
+    process.stdout.write(`Your name is: ${trimmedInput}\n`);
+    process.stdin.on('end', () => {
+      process.stdout.write('This important software is now closing.\n');
+    });
+  }
 });
